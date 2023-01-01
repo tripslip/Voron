@@ -1,0 +1,71 @@
+ #  __________________________________________________________________________
+ #  |                                                                        |
+ #  |                                                                        |
+ #  |                                                                        |
+ #  |                                                                        |
+ #  |                                                                        |
+ #  |                                                                        |
+ #  |                                                                        |
+ #  |                                                                        |
+ #  |                                                                        |
+ #  |                                                                        |
+ #  |                                * Probe Ready Position                  |
+ #  |                                  X150 Y150                             |
+ #  |                                                                        |
+ #  |                                                                        |
+ #  | * Dock Re-entry staging  position                                      |
+ #  |   X0 Y70                                                               |
+ #  |                                                                        |
+ #  |                                                                        |
+ #  | * Dock Exit Position                                                   | 
+ #  |   X0 Y40                                                               |
+ #  |                                                                        |
+ #  |                                                                        |
+ #  |                                                                        |
+ #  |                                                                        |
+ #  |                                                                        |
+ #  |   X0 Y0    X30 Y0       X100 Y0                                        |
+ #  | * Dock   * Dock Side  * Dock Preflight                                 |
+ #  |________________________________________________________________________| 
+ #
+ # Above is example 300x300 bed to coorelate with macros and movements below.
+ # This example is for a fixed dock, fixed gantry/carraige and moving bed motion system. 
+ # RailCore, Ender5, V-Core3, etc...
+ # For moving gantry sytem like Voron 2.4, there are some subltle things to change.
+ # We have attempetd indicate those in the comments throughout the example code.   
+ # Z elevation is shown in movements to ensure adequate Z elevation to avoid crashes. 
+ # With the coupling magnets +/- 2mm of the nozzle the probe trigger height is on the
+ # ordeer of 12mm, so 15mm is used as a safe height.
+ #
+ # the printer.cfg-snip.txt has the following config settings 
+ # # 
+ # #...
+ # # add this include statement at the head of the config file
+ # [include euclid.cfg]
+ # #
+ #
+ # #
+ # # enable enable_force_move to enable FORCE_MOVE and SET_KINEMATIC_POSIITION
+ # enable_force_move:true
+ # # ...
+ #
+ # It is assumed that there is a seperate Z-endstop that is used to home Z
+ # IF YOU ARE USING PROBE AS ENDSTOP AND PROBE homing_overide must be altered
+ #
+ # some configurtions may need FORCE_MOVE enabled for kinematic position functionS
+ # https://www.klipper3d.org/Config_Reference.html?h=force_move#force_move
+ #
+ # if you have the hardware defined in the printer.cfg comment out the [probe] section below.
+ #[probe]
+ ##    Euclid Probe
+ #pin: PG15                  ; use pin PA0 and enable internal pullup resistor as this is an NC switch  use ! to invert if needed
+ #x_offset: 2.0                ; probe is offset 2.0mm from nozzle
+ #y_offset: 25.0               ; probe is +25mm from nozzle in Y direction
+ #z_offset: 11.35              ; trigger point is 9.5mm below nozzle. larger numbers move effective Z0 CLOSER to the nozzle
+ #speed: 5                     ; probing speed of 5mm/second ideal is <10mm/sec  
+ #lift_speed: 10               ; probe lift speed
+ #samples: 3                   ; number of probes to perform per sample
+ #samples_result: median      ; normalization method: see config reference
+ #sample_retract_dist: 3.0
+ #samples_tolerance: 0.0075
+ #samples_tolerance_retries: 3
